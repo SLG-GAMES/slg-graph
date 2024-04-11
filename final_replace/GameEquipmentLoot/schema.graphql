@@ -1,0 +1,24 @@
+type LootAssetsEntity @entity {
+    id: ID!
+    tokenId: BigInt!
+    revealed: Boolean!
+    tokenURI: String!
+    contract: Bytes!
+    owner: Bytes!
+    token: TokenContract!
+    attrs:[Attribute!]!@derivedFrom(field: "asset")
+}
+
+type Attribute @entity {
+    id: ID!
+    attrID: BigInt!
+    value: BigInt!
+    asset:LootAssetsEntity!
+}
+
+type TokenContract @entity {
+    id: ID!
+    name: String
+    symbol: String
+    assets:[LootAssetsEntity!]!@derivedFrom(field: "token")
+}

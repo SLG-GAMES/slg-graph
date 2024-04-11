@@ -1,0 +1,138 @@
+specVersion: 0.0.4
+description: NFT assets data.
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: GameLootEquipment
+    network: chapel
+    source:
+      abi: GameLootEquipment
+      startBlock: 22218570
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - LootAssetsEntity
+        - Attribute
+        - TokenContract
+      abis:
+        - name: GameLootEquipment
+          file: ./abis/GameLootEquipment.json
+      eventHandlers:
+        - event: AttributeAttached(uint256,uint128,uint128)
+          handler: handleAttributeAttached
+        - event: AttributeAttachedBatch(uint256,uint128[],uint128[])
+          handler: handleAttributeAttachedBatch
+        - event: AttributeUpdated(uint256,uint256,uint128)
+          handler: handleAttributeUpdated
+        - event: AttributeUpdatedBatch(uint256,uint256[],uint128[])
+          handler: handleAttributeUpdatedBatch
+        - event: AttributeRemoved(uint256,uint128)
+          handler: handleAttributeRemoved
+        - event: AttributeRemoveBatch(uint256,uint128[])
+          handler: handleAttributeRemoveBatch
+        - event: Revealed(uint256)
+          handler: handleRevealed
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/eq.ts
+  - kind: ethereum/contract
+    name: AdventurerPass
+    network: chapel
+    source:
+      abi: GameERC721Token
+      startBlock: 26297631
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - LootAssetsEntity
+      abis:
+        - name: GameERC721Token
+          file: ./abis/GameERC721Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransferProps
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: GoblinPass
+    network: chapel
+    source:
+      abi: GameERC721Token
+      startBlock: 26297631
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - LootAssetsEntity
+      abis:
+        - name: GameERC721Token
+          file: ./abis/GameERC721Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransferProps
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: CollectorPass
+    network: chapel
+    source:
+      abi: GameERC721Token
+      startBlock: 26297631
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - LootAssetsEntity
+      abis:
+        - name: GameERC721Token
+          file: ./abis/GameERC721Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransferProps
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: PropFactory
+    network: chapel
+    source:
+      abi: GameERC721Factory
+      startBlock: 22884082
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - TokenContract
+      abis:
+        - name: GameERC721Factory
+          file: ./abis/GameERC721Factory.json
+        - name: GameERC721Token
+          file: ./abis/GameERC721Token.json
+      eventHandlers:
+        - event: Generate(address,uint256)
+          handler: handlePropGenerate
+      file: ./src/mapping.ts
+templates:
+  - name: Prop
+    kind: ethereum/contract
+    network: chapel
+    source:
+      abi: GameERC721Token
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mapping.ts
+      entities:
+        - TokenContract
+        - LootAssetsEntity
+      abis:
+        - name: GameERC721Token
+          file: ./abis/GameERC721Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransferProps

@@ -1,0 +1,35 @@
+specVersion: 0.0.4
+description: ArchLoot Marketplace v1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: GameDaoFixedNFT
+    network: chapel
+    source:
+      abi: GameDaoFixedNFT
+      startBlock: 22247586
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Pool
+        - Activity
+      abis:
+        - name: GameDaoFixedNFT
+          file: ./abis/GameDaoFixedNFT.json
+      eventHandlers:
+        - event: Claimed(address,uint256)
+          handler: handleClaimed
+        - event: Closed(address,uint256)
+          handler: handleClosed
+        - event: Created((address,address,address,uint256,uint256,uint256,uint256),uint256)
+          handler: handleCreated
+        - event: NewPrice(address,uint256,uint256)
+          handler: handleNewPrice
+        - event: NewTime(address,uint256,uint256)
+          handler: handleNewTime
+        - event: Swapped(address,uint256,uint256)
+          handler: handleSwapped
+      file: ./src/mapping.ts

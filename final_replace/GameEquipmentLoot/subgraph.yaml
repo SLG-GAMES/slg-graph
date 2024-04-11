@@ -1,0 +1,96 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: GameLootEquipment
+    network: chapel
+    source:
+      abi: GameLootEquipment
+      startBlock: 22218571
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - LootAssetsEntity
+        - Attribute
+        - TokenContract
+      abis:
+        - name: GameLootEquipment
+          file: ./abis/GameLootEquipment.json
+      eventHandlers:
+        - event: AttributeAttached(uint256,uint128,uint128)
+          handler: handleAttributeAttached
+        - event: AttributeAttachedBatch(uint256,uint128[],uint128[])
+          handler: handleAttributeAttachedBatch
+        - event: AttributeRemoveBatch(uint256,uint128[])
+          handler: handleAttributeRemoveBatch
+        - event: AttributeRemoved(uint256,uint128)
+          handler: handleAttributeRemoved
+        - event: AttributeUpdated(uint256,uint256,uint128)
+          handler: handleAttributeUpdated
+        - event: AttributeUpdatedBatch(uint256,uint256[],uint128[])
+          handler: handleAttributeUpdatedBatch
+        - event: Revealed(uint256)
+          handler: handleRevealed
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: BOSSChest
+    network: chapel
+    source:
+      abi: GameERC721Token
+      startBlock: 22222835
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - LootAssetsEntity
+      abis:
+        - name: GameERC721Token
+          file: ./abis/GameERC721Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: CommonChest
+    network: chapel
+    source:
+      abi: GameERC721Token
+      startBlock: 22222735
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - LootAssetsEntity
+      abis:
+        - name: GameERC721Token
+          file: ./abis/GameERC721Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: RepairingPotion
+    network: chapel
+    source:
+      abi: GameERC721Token
+      startBlock: 22222735
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - LootAssetsEntity
+      abis:
+        - name: GameERC721Token
+          file: ./abis/GameERC721Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts

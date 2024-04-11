@@ -1,0 +1,8 @@
+type LootAssetsEntity @entity {
+    id: ID!
+    tokenId: BigInt!
+    revealed: Boolean
+    tokenURI: String
+    owner: Bytes
+    contract: Bytes
+}

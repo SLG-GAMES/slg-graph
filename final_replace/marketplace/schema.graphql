@@ -1,0 +1,37 @@
+type Pool @entity {
+    id: ID!
+    index: BigInt!
+    creator: Bytes!
+    token0: Bytes!
+    token1: Bytes!
+    tokenId: BigInt!
+    amountTotal0: BigInt!
+    amountTotal1: BigInt!
+    closeAt: BigInt!
+    swapped: Boolean!
+    closed: Boolean!
+    redeemed: Boolean!
+    buyer: Bytes!
+    createdTime: BigInt!
+    createdHash: Bytes!
+    swappedTime: BigInt!
+    swappedHash: Bytes!
+    closedTime: BigInt!
+    closedHash: Bytes!
+    redeemTime: BigInt!
+    redeemHash: Bytes!
+}
+
+type Activity @entity(immutable: true) {
+    id: ID!
+    activityType: BigInt!
+    token0: Bytes!
+    token1: Bytes!
+    amountTotal1: BigInt!
+    tokenId: BigInt!
+    activityer: Bytes!
+    creator: Bytes!
+    buyer: Bytes!
+    time: BigInt!
+    hash: Bytes!
+}
