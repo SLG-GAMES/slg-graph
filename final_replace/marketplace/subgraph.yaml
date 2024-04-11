@@ -1,5 +1,5 @@
 specVersion: 0.0.4
-description: ArchLoot Marketplace v1
+description: Marketplace v1
 schema:
   file: ./schema.graphql
 dataSources:
